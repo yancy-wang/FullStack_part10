@@ -1,4 +1,3 @@
-// components/FormikTextInput.tsx
 import { FieldHookConfig, useField } from 'formik';
 import { StyleSheet, TextInputProps, View } from 'react-native';
 import theme from '../constants/theme';

@@ -1,4 +1,3 @@
-// hooks/useCurrentUser.js
 import { useQuery } from '@apollo/client';
 import { GET_CURRENT_USER } from '../graphql/queries';
 

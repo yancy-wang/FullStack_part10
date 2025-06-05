@@ -1,8 +1,7 @@
-// components/RepositoryItem.jsx
-import { View, StyleSheet, Image } from 'react-native';
-import Text from './ui/ThemedText'
+import { Image, StyleSheet, View } from 'react-native';
 import theme from '../constants/theme';
 import { formatNumber } from '../constants/utils';
+import Text from './ui/ThemedText.tsx';
 
 const styles = StyleSheet.create({
   container: {

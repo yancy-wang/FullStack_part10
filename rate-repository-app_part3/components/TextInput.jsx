@@ -1,4 +1,3 @@
-// components/TextInput.jsx
 import { TextInput as NativeTextInput, StyleSheet } from 'react-native';
 import theme from '../constants/theme';
 

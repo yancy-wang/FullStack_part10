@@ -1,39 +1,45 @@
-// hooks/useSignIn.js
-import { FetchResult, useApolloClient, useMutation } from '@apollo/client';
+import { useMutation, useApolloClient } from '@apollo/client';
 import { useRouter } from 'expo-router';
-import { useContext } from 'react';
-import AuthStorageContext from '../contexts/AuthStorageContext';
 import { AUTHENTICATE } from '../graphql/mutations';
+import AuthStorage from '../utils/authStorage';
 
-interface AuthenticateResponse {
+interface AuthenticateData {
   authenticate: {
     accessToken: string;
   };
 }
 
+interface AuthenticateCredentials {
+  username: string;
+  password: string;
+}
+
 const useSignIn = () => {
-  const authStorage = useContext(AuthStorageContext);
-  if (!authStorage) {
-    throw new Error('AuthStorageContext not initialized');
-  }
   const apolloClient = useApolloClient();
   const router = useRouter();
-  const [mutate, result] = useMutation<AuthenticateResponse>(AUTHENTICATE);
+  const [mutate, result] = useMutation<AuthenticateData>(AUTHENTICATE);
 
-  const signIn = async ({ username, password }: { username: string; password: string }): Promise<FetchResult<AuthenticateResponse>> => {
-    const { data } = await mutate({
-      variables: {
-        credentials: { username, password },
-      },
-    });
+  const signIn = async ({ username, password }: AuthenticateCredentials) => {
+    try {
+      const authStorage = new AuthStorage();
+      
+      const { data } = await mutate({
+        variables: {
+          credentials: { username, password },
+        },
+      });
 
-    if (data?.authenticate?.accessToken) {
-      await authStorage.setAccessToken(data.authenticate.accessToken);
-      apolloClient.resetStore();
-      router.replace('/');
+      if (data?.authenticate?.accessToken) {
+        await authStorage.setAccessToken(data.authenticate.accessToken);
+        apolloClient.resetStore();
+        router.replace('/');
+      }
+
+      return { data };
+    } catch (error) {
+      console.error('Sign in error:', error);
+      throw error;
     }
-
-    return { data };
   };
 
   return [signIn, result] as const;

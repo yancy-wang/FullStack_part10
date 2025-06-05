@@ -1,8 +1,7 @@
-// components/RepositoryList.jsx
 import { FlatList, View, StyleSheet } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
-import Text from './ThemedText';
+import Text from './ui/ThemedText';
 
 const styles = StyleSheet.create({
   separator: {

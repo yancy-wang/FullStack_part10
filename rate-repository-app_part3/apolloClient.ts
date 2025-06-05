@@ -1,17 +1,17 @@
+// utils/apolloClient.ts
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import Constants from 'expo-constants';
-import AuthStorage from './authStorage';
+import AuthStorage from './utils/authStorage';
 
 const httpLink = createHttpLink({
   uri: Constants.expoConfig?.extra?.apolloUri || 'http://localhost:4000',
 });
 
-const globalAuthStorage = new AuthStorage();
-
 const authLink = setContext(async (_, { headers }) => {
   try {
-    const accessToken = await globalAuthStorage.getAccessToken();
+    const authStorage = new AuthStorage();
+    const accessToken = await authStorage.getAccessToken();
     return {
       headers: {
         ...headers,
@@ -19,7 +19,7 @@ const authLink = setContext(async (_, { headers }) => {
       },
     };
   } catch (e) {
-    console.log('Error getting access token:', e);
+    console.log('Auth error:', e);
     return {
       headers,
     };

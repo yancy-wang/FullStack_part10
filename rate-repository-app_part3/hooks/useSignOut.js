@@ -1,4 +1,3 @@
-// hooks/useSignOut.js
 import { useContext } from 'react';
 import { useApolloClient } from '@apollo/client';
 import AuthStorageContext from '../contexts/AuthStorageContext';

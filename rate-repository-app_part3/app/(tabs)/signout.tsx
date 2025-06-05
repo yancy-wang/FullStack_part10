@@ -1,4 +1,3 @@
-// app/(tabs)/signout.tsx
 import { View } from 'react-native';
 import Text from '../../components/ui/ThemedText';
 

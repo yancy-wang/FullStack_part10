@@ -1,3 +1,4 @@
+// app.config.js
 import 'dotenv/config';
 
 export default {
@@ -6,27 +7,15 @@ export default {
     slug: 'rate-repository-app',
     version: '1.0.0',
     orientation: 'portrait',
-    icon: './assets/images/icon.png',
     scheme: 'myapp',
     userInterfaceStyle: 'automatic',
-    splash: {
-      image: './assets/images/splash.png',
-      resizeMode: 'contain',
-      backgroundColor: '#ffffff'
-    },
     ios: {
       supportsTablet: true
     },
-    android: {
-      adaptiveIcon: {
-        foregroundImage: './assets/images/adaptive-icon.png',
-        backgroundColor: '#ffffff'
-      }
-    },
+    android: {},
     web: {
       bundler: 'metro',
       output: 'static',
-      favicon: './assets/images/favicon.png'
     },
     plugins: [
       'expo-router'
@@ -35,7 +24,7 @@ export default {
       typedRoutes: true
     },
     extra: {
-      apolloUri: process.env.APOLLO_URI,
+      apolloUri: process.env.APOLLO_URI || 'http://localhost:4000',
     },
   }
 };

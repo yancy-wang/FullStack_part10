@@ -1,12 +1,12 @@
-// utils/authStorage.js
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class AuthStorage {
+  namespace: string;
   constructor(namespace = 'auth') {
     this.namespace = namespace;
   }
 
-  async getAccessToken() {
+  async getAccessToken(): Promise<string | null> {
     try {
       const accessToken = await AsyncStorage.getItem(
         `${this.namespace}:accessToken`,
@@ -18,7 +18,7 @@ class AuthStorage {
     }
   }
 
-  async setAccessToken(accessToken) {
+  async setAccessToken(accessToken: string): Promise<void> {
     try {
       await AsyncStorage.setItem(
         `${this.namespace}:accessToken`,
@@ -29,7 +29,7 @@ class AuthStorage {
     }
   }
 
-  async removeAccessToken() {
+  async removeAccessToken(): Promise<void> {
     try {
       await AsyncStorage.removeItem(`${this.namespace}:accessToken`);
     } catch (e) {
